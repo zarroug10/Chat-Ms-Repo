@@ -48,9 +48,9 @@ pipeline {
 
         stage('Build Docker image') {
             steps {
-                sh 'docker build -t feedback:latest -f Dockerfile .'
+                sh 'docker build -t chat:latest -f Dockerfile .'
                 // Tag the Docker image with a version
-                sh 'docker tag feedback:latest zarroug/feedback:latest'
+                sh 'docker tag chat:latest zarroug/chat:latest'
             }
         }
 
@@ -61,7 +61,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'token', variable: 'DOCKER_TOKEN')]) {
                         docker.withRegistry('https://index.docker.io/v1/', '12') {
                             // Push both the latest and tagged images
-                            docker.image('zarroug/feedback:latest').push('latest')
+                            docker.image('zarroug/chat:latest').push('latest')
                         }
                     }
                 }
